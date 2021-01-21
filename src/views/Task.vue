@@ -19,18 +19,18 @@
 
 <script>
 import AppStatus from '../components/AppStatus'
-import {useRouter} from 'vue-router'
-import {computed, ref} from 'vue'
+import {useRoute} from 'vue-router'
+import {computed} from 'vue'
 import {useStore} from 'vuex'
 
 export default {
  components: {AppStatus},
  setup() {
   const store = useStore()
-  const router = useRouter()
-  const id = ref(router.currentRoute.value.params.id)
-  const task = computed(() => store.getters.tasks.find(t => t.id === id.value))
-  const changeTaskType = async type => store.dispatch('changeTaskType', {id: id.value, type})
+  const route = useRoute()
+  const id = route.params.id
+  const task = computed(() => store.getters.tasks.find(t => t.id === id))
+  const changeTaskType = async type => store.dispatch('changeTaskType', {id, type})
   return {task, id, changeTaskType}
  }
 }
